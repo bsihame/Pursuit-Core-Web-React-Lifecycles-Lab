@@ -1,8 +1,9 @@
 import React from "react";
 import "./App.css";
 import Form from "./components/Form";
-// import ToDoItem from "./components/ToDoItem";
 import ToDoList from "./components/ToDoList";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends React.Component {
   state = {
@@ -10,16 +11,22 @@ class App extends React.Component {
     toDoList: []
   };
 
+  notify = input => {
+    toast(input);
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const { input } = this.state;
-    console.log(input);
+    this.notify("New ToDo created: " + input);
     this.setState(prevState => {
       return {
         toDoList: [...prevState.toDoList, input]
       };
     });
   };
+
+  componentDidMount = () => {};
 
   handleChange = e => {
     this.setState({
@@ -28,6 +35,7 @@ class App extends React.Component {
   };
 
   handleClick = e => {
+    this.notify("ToDo deleted: " + this.state.toDoList[e.target.id]);
     let toDos = this.state.toDoList.filter(
       (item, i) => i !== Number(e.target.id)
     );
@@ -48,6 +56,7 @@ class App extends React.Component {
           input={input}
           handleClick={this.handleClick}
         />
+        <ToastContainer />
       </div>
     );
   }
