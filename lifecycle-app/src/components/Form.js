@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
-const Form =({todoInput, handleSubmit, handleChange}) =>{
-    return(
-      <form onSubmit={handleSubmit}>
-        <input 
-        type="text" 
+const Form = ({ handleSubmit, handleChange }) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
         placeholder="Enter Todo"
-        value={todoInput}
+        name="input"
         onChange={handleChange}
-        />
-      </form>
-    )
-  }
+      />
+    </form>
+  );
+};
 
 export default Form;

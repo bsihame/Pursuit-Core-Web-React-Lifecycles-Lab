@@ -1,33 +1,56 @@
-import React from 'react';
-import './App.css';
-import Form from './components/Form'
-import ToDoList from './components/ToDoList'
+import React from "react";
+import "./App.css";
+import Form from "./components/Form";
+// import ToDoItem from "./components/ToDoItem";
+import ToDoList from "./components/ToDoList";
 
 class App extends React.Component {
   state = {
     input: "",
-    toDoList: [],
-  }
+    toDoList: []
+  };
 
   handleSubmit = e => {
     e.preventDefault();
-    let { input, toDoList } = this.state;
-    
-  }
+    const { input } = this.state;
+    console.log(input);
+    this.setState(prevState => {
+      return {
+        toDoList: [...prevState.toDoList, input]
+      };
+    });
+  };
 
   handleChange = e => {
     this.setState({
-      [e.target.input]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value
+    });
+  };
+
+  handleClick = e => {
+    let toDos = this.state.toDoList.filter(
+      (item, i) => i !== Number(e.target.id)
+    );
+    this.setState({ toDoList: toDos });
+  };
+
   render() {
+    const { input, toDoList } = this.state;
+    console.log(this.state);
     return (
-    <div className="App">
-     <Form handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
-     <ToDoList/>
-    </div>
-  );
-    }
+      <div className="App">
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+        />
+        <ToDoList
+          toDoList={toDoList}
+          input={input}
+          handleClick={this.handleClick}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
